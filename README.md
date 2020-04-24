@@ -13,7 +13,7 @@ Pytorch 1.1
 - Extracted feature of the two datasets is [Here](https://github.com/fanchenyou/HME-VideoQA). Please cite [Link](https://arxiv.org/abs/1904.04357).
 
 ## Pre-trained Model
-We provide four pre-trained models of TGIF-QA dataset.
+We provide four pre-trained models of TGIF-QA dataset. [Google Drive](https://drive.google.com/open?id=13_0YbJPivYps0vqarOKOF8c2Lf7_b4ab). The file path is `HGA/saved_models/MMModel/Count_4.092.pth`.
 - Trans_80.95.pth
 - FrameQA_54.99.pth
 - Count_4.092.pth
