@@ -1,4 +1,4 @@
-Saved models.
+Pre-trained models.
 
 |Task of TGIF-QA|Performance|
 |---|---|
