@@ -16,3 +16,15 @@ CUDA_VISIBLE_DEVICES=0 python main.py  --test --task Count --num_workers 2 --bat
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py --task Action --num_workers 2 --batch_size 64 --lr 0.0001 --model 7 --dropout 0.3 --change_lr none --ablation none
 ```
+
+## Cite
+
+```
+@inproceedings{jiang2020reasoning,
+  title={Reasoning with Heterogeneous Graph Alignment for Video Question Answering},
+  author={Jiang, Pin and Han, Yahong},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  year={2020}
+}
+```
+
