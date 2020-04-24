@@ -345,24 +345,21 @@ def test(args, model, test_dataloader, epoch, criterion):
     loss_list = []
     prediction_list = []
     correct_answer_list = []
-    adj_list = []
 
     for ii, data in enumerate(test_dataloader):
         data = [d.to(device) for d in data]
 
-        out, predictions, answers, adj = model(args.task, *data)
+        out, predictions, answers, _ = model(args.task, *data)
 
         loss = criterion(out, answers)
 
         correct_answer_list.append(answers)
         loss_list.append(loss.item())
         prediction_list.append(predictions.detach())
-        adj_list.append(adj.detach())
 
     test_loss = np.mean(loss_list)
     correct_answer = torch.cat(correct_answer_list, dim=0).long()
     predict_answer = torch.cat(prediction_list, dim=0).long()
-    adj = torch.cat(adj_list, dim=0)
     assert correct_answer.shape == predict_answer.shape
 
     current_num = torch.sum(predict_answer == correct_answer).cpu().numpy()
@@ -378,8 +375,8 @@ def test(args, model, test_dataloader, epoch, criterion):
                                  acc >= 80) or (args.task == 'FrameQA' and
                                                 acc >= 54):
             torch.save(
-                model, args.save_model_path + args.task + '_' + str(
-                    acc.item())[:5] + '.pth')
+                model, args.save_model_path + args.task + '_' +
+                str(acc.item())[:5] + '.pth')
             print('Save model at ', args.save_model_path)
 
     if args.task == 'Count':
@@ -387,14 +384,9 @@ def test(args, model, test_dataloader, epoch, criterion):
         print('Test|Count Real Loss:\t {:.3f}'.format(count_loss))
         if args.save and count_loss <= 4.1:
             torch.save(
-                model, args.save_model_path + args.task + '_' + str(
-                    count_loss.item())[:5] + '.pth')
+                model, args.save_model_path + args.task + '_' +
+                str(count_loss.item())[:5] + '.pth')
             print('Save model at ', args.save_model_path)
-
-    if args.task == 'Action' and acc >= 74 and args.save_adj:
-        with h5py.File(args.save_path + 'adj.h5', 'w') as f:
-            f.create_dataset('Adj', data=adj)
-        print('Save adj at ', args.save_path + 'adj.h5')
 
 
 if __name__ == '__main__':
@@ -455,10 +447,10 @@ if __name__ == '__main__':
     parser.add_argument(
         '--tf_layers',
         type=int,
-        default=0,
+        default=1,
         help='number of layers in transformer')
     parser.add_argument('--batch_size', type=int, default=128)
-    parser.add_argument('--max_n_videos', type=int, default=None)
+    parser.add_argument('--max_n_videos', type=int, default=100000)
     parser.add_argument('--num_workers', type=int, default=1)
     parser.add_argument('--lr', type=float, default=0.0001)
     parser.add_argument('--lr_list', type=list, default=[10, 20, 30, 40])
