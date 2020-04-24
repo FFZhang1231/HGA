@@ -1,0 +1,6 @@
+__pycache__/
+*.log
+*.pyc
+.vscode/
+*.pth
+*.h5
